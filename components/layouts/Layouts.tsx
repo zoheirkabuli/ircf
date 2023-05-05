@@ -10,7 +10,9 @@ const Layouts = ({ children }: PropsType) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className="w-[95%] justify-self-center flex flex-col gap-[15px]">
+        {children}
+      </main>
       <Footer />
     </>
   );
