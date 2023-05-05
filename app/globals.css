@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
-  gap: 1rem;
+  gap: 10px;
 }
