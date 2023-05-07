@@ -8,3 +8,9 @@ body {
   min-height: 100vh;
   gap: 10px;
 }
+
+.persian-num {
+  -moz-font-feature-settings: 'ss05';
+  -webkit-font-feature-settings: 'ss05';
+  font-feature-settings: 'ss05';
+}
