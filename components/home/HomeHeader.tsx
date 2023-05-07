@@ -1,77 +1,71 @@
+'use client';
 import { useEffect, useState } from 'react';
-import { Box, Autocomplete, TextField, Button } from '@mui/material';
+import Select from 'react-select';
+import { SingleValue } from 'react-select';
 
 // *
 import iranProvinces from '@/lib/IranProvince';
 import enOperators from '@/lib/enOperators';
 
-interface FilterType {
-  sort: string | null;
-  province: string | null;
-  operator: string | null;
-}
+const sortOptions = [
+  { label: 'تاخیر(صعودی)', value: 'DELAYASC' },
+  { label: 'تاخیر(نزولی)', value: 'DELAYDES' },
+];
 
-// const sortOptions = ['تاخیر(صعودی)', 'تاخیر(نزولی)'];
-const sortOptions = {
-  'تاخیر(صعودی)': 'DELAYASC',
-  'تاخیر(نزولی)': 'DELAYDES',
-};
+type StateType = { value: string; label: string } | null;
 
 const HomeHeader = () => {
-  const [filter, setFilter] = useState<FilterType>({
-    sort: null,
-    province: null,
-    operator: null,
-  });
+  const [sort, setSort] = useState<StateType>(null);
+  const [province, setProvince] = useState<StateType>(null);
+  const [operator, setOperator] = useState<StateType>(null);
 
   useEffect(() => {
-    console.table(filter);
-  }, [filter]);
+    console.table({
+      sort: sort?.value,
+      province: province?.value,
+      operator: operator?.value,
+    });
+  }, [sort, province, operator]);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: { xs: 'stretch', sm: 'center' },
-        gap: '1rem',
-        flexDirection: { xs: 'column', sm: 'row' },
-      }}
-    >
-      <Autocomplete
-        size="small"
-        value={filter.sort}
-        onChange={(event: any, newValue: string | null) => {
-          setFilter((prevFilter) => ({ ...prevFilter, sort: newValue }));
+    <div className="flex md:items-center gap-[10px] flex-col md:flex-row">
+      <Select
+        className="flex-1"
+        id="select-sort"
+        placeholder="ترتیب"
+        value={sort}
+        onChange={(newValue) => {
+          setSort(newValue);
         }}
-        id="controllable-states-demo"
-        options={Object.keys(sortOptions)}
-        sx={{ flex: { xs: 'none', sm: '1 0 0' } }}
-        renderInput={(params) => <TextField {...params} label="ترتیب" />}
+        options={sortOptions}
       />
-      <Autocomplete
-        size="small"
-        value={filter.province}
-        onChange={(event: any, newValue: string | null) => {
-          setFilter((prevFilter) => ({ ...prevFilter, province: newValue }));
+      <Select
+        className="flex-1"
+        id="select-operator"
+        placeholder="اپراتور"
+        value={operator}
+        onChange={(newValue) => {
+          setOperator(newValue);
         }}
-        id="Province"
-        options={iranProvinces.map((item) => item.persian)}
-        sx={{ flex: { xs: 'none', sm: '1 0 0' } }}
-        renderInput={(params) => <TextField {...params} label="استان" />}
+        options={enOperators}
       />
-      <Autocomplete
-        size="small"
-        value={filter.operator}
-        onChange={(event: any, newValue: string | null) => {
-          setFilter((prevFilter) => ({ ...prevFilter, operator: newValue }));
+      <Select
+        className="flex-1"
+        id="select-province"
+        placeholder="استان"
+        value={province}
+        onChange={(newValue) => {
+          setProvince(newValue);
         }}
-        id="Operator"
-        options={Object.values(enOperators)}
-        sx={{ flex: { xs: 'none', sm: '1 0 0' } }}
-        renderInput={(params) => <TextField {...params} label="اپراتور" />}
+        options={iranProvinces}
       />
-      <Button variant="contained">اعمال فیلتر</Button>
-    </Box>
+      <button
+        type="button"
+        className="inline-block rounded bg-[#FF7900] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#FF7900] transition duration-150 ease-in-out hover:bg-[rgb(222,106,1)] hover:shadow-[0_8px_9px_-4px_rgba(255,121,0,0.3),0_4px_18px_0_rgba(255,121,0,0.2)] focus:bg-[rgb(222,106,1)] focus:shadow-[0_8px_9px_-4px_rgba(255,121,0,0.3),0_4px_18px_0_rgba(255,121,0,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(255,121,0,0.3),0_4px_18px_0_rgba(255,121,0,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(255,121,0,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(255,121,0,0.2),0_4px_18px_0_rgba(255,121,0,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(255,121,0,0.2),0_4px_18px_0_rgba(255,121,0,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(255,121,0,0.2),0_4px_18px_0_rgba(255,121,0,0.1)]"
+      >
+        فیلتر
+      </button>
+    </div>
   );
 };
 

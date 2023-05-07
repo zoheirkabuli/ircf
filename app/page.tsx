@@ -1,3 +1,8 @@
-export default function Home() {
-  return <h1>سلام</h1>;
-}
+// * components
+import HomeLayout from '@/components/home/HomeLayout';
+
+const Home = () => {
+  return <HomeLayout />;
+};
+
+export default Home;
